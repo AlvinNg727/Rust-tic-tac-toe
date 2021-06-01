@@ -20,40 +20,49 @@ impl Moves {
         for i in 0..9 {
             match i {
                 0 => {
+                    print.push_str("     |     |\n  ");
                     print.push_str(&match_move(self.t_l, i + 1));
-                    print.push_str(" ")
+                    print.push_str("  |")
                 }
                 1 => {
+                    print.push_str("  ");
                     print.push_str(&match_move(self.t_c, i + 1));
-                    print.push_str(" ")
+                    print.push_str("  |")
                 }
                 2 => {
+                    print.push_str("  ");
                     print.push_str(&match_move(self.t_r, i + 1));
-                    print.push_str(" \n")
+                    print.push_str("  \n_____|_____|_____\n")
                 }
                 3 => {
+                    print.push_str("     |     |\n  ");
                     print.push_str(&match_move(self.c_l, i + 1));
-                    print.push_str(" ")
+                    print.push_str("  |")
                 }
                 4 => {
+                    print.push_str("  ");
                     print.push_str(&match_move(self.c_c, i + 1));
-                    print.push_str(" ")
+                    print.push_str("  |")
                 }
                 5 => {
+                    print.push_str("  ");
                     print.push_str(&match_move(self.c_r, i + 1));
-                    print.push_str(" \n")
+                    print.push_str("  \n_____|_____|_____\n")
                 }
                 6 => {
+                    print.push_str("     |     |\n  ");
                     print.push_str(&match_move(self.b_l, i + 1));
-                    print.push_str(" ")
+                    print.push_str("  |")
                 }
                 7 => {
+                    print.push_str("  ");
                     print.push_str(&match_move(self.b_c, i + 1));
-                    print.push_str(" ")
+                    print.push_str("  |")
                 }
                 8 => {
+                    print.push_str("  ");
                     print.push_str(&match_move(self.b_r, i + 1));
-                    print.push_str(" \n")
+                    print.push_str("  \n     |     |")
                 }
                 _ => println!("wtf(print_board)"),
             }
@@ -134,9 +143,18 @@ fn main() {
         }
 
         match winner {
-            3 => {println!("Tie"); break},
-            2 => {println!("Player O wins"); break},
-            1 => {println!("Player X wins"); break},
+            3 => {
+                println!("Tie");
+                break;
+            }
+            2 => {
+                println!("Player O wins");
+                break;
+            }
+            1 => {
+                println!("Player X wins");
+                break;
+            }
             0 => (),
             _ => break,
         };
@@ -153,6 +171,8 @@ fn get_move() -> u32 {
         io::stdin()
             .read_line(&mut player_move)
             .expect("Failed to read line");
+
+        println!("");
 
         let _player_move: u32 = match player_move.trim().parse() {
             Ok(num) => return num,
@@ -190,19 +210,26 @@ fn check_valid_move(player_move: u32, past_moves: Moves) -> bool {
 
 fn check_won(past_moves: Moves, current_player: char) -> u32 {
     //horizontal
-    if past_moves.t_l == past_moves.t_c && past_moves.t_c == past_moves.t_r && past_moves.t_c != '_'{
+    if past_moves.t_l == past_moves.t_c && past_moves.t_c == past_moves.t_r && past_moves.t_c != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
             _ => println!("wtf(check_won)"),
         }
-    } else if past_moves.c_l == past_moves.c_c && past_moves.c_c == past_moves.c_r && past_moves.c_c != '_'{
+    } else if past_moves.c_l == past_moves.c_c
+        && past_moves.c_c == past_moves.c_r
+        && past_moves.c_c != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
             _ => println!("wtf(check_won)"),
         }
-    } else if past_moves.b_l == past_moves.b_c && past_moves.b_c == past_moves.b_r && past_moves.b_c != '_'{
+    } else if past_moves.b_l == past_moves.b_c
+        && past_moves.b_c == past_moves.b_r
+        && past_moves.b_c != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
@@ -211,19 +238,26 @@ fn check_won(past_moves: Moves, current_player: char) -> u32 {
     }
 
     //vertical
-    if past_moves.t_l == past_moves.c_l && past_moves.c_l == past_moves.b_l && past_moves.c_l != '_'{
+    if past_moves.t_l == past_moves.c_l && past_moves.c_l == past_moves.b_l && past_moves.c_l != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
             _ => println!("wtf(check_won)"),
         }
-    } else if past_moves.t_c == past_moves.c_c && past_moves.c_c == past_moves.b_c && past_moves.c_c != '_'{
+    } else if past_moves.t_c == past_moves.c_c
+        && past_moves.c_c == past_moves.b_c
+        && past_moves.c_c != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
             _ => println!("wtf(check_won)"),
         }
-    } else if past_moves.t_r == past_moves.c_r && past_moves.c_r == past_moves.b_r && past_moves.c_r != '_'{
+    } else if past_moves.t_r == past_moves.c_r
+        && past_moves.c_r == past_moves.b_r
+        && past_moves.c_r != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
@@ -232,13 +266,17 @@ fn check_won(past_moves: Moves, current_player: char) -> u32 {
     }
 
     //diagonal
-    if past_moves.t_l == past_moves.c_c && past_moves.c_c == past_moves.b_r && past_moves.c_c != '_'{
+    if past_moves.t_l == past_moves.c_c && past_moves.c_c == past_moves.b_r && past_moves.c_c != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
             _ => println!("wtf(check_won)"),
         }
-    } else if past_moves.t_r == past_moves.c_c && past_moves.c_c == past_moves.b_l && past_moves.c_c != '_'{
+    } else if past_moves.t_r == past_moves.c_c
+        && past_moves.c_c == past_moves.b_l
+        && past_moves.c_c != '_'
+    {
         match current_player {
             'X' => return 1,
             'O' => return 2,
